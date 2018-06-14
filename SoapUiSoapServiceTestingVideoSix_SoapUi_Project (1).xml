@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="e0418bc9-634d-4cce-851a-988ebb6f5b20" activeEnvironment="Default" name="SoapUiSOAPTrainingProject" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:description>example project</con:description><con:settings/><con:interface xsi:type="con:WsdlInterface" id="0dab3bb7-f8ea-481c-8871-d25f0c3c9375" wsaVersion="NONE" name="BasicHttpBinding_IService1" type="wsdl" bindingName="{http://tempuri.org/}BasicHttpBinding_IService1" soapVersion="1_1" anonymous="optional" definition="file:/C:/VideoTutorials/SoapUiSOAPServices/Lesson%206/Service1_1.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoints><con:endpoint>http://lenny:20050/GetHeroRealName</con:endpoint><con:endpoint>http://lenny:20055/GetHeroDetails</con:endpoint><con:endpoint>http://lenny:8088/mockBasicHttpBinding_IService1</con:endpoint><con:endpoint>http://localhost:57636/Service1.svc</con:endpoint></con:endpoints><con:operation id="4ffc4342-8884-48c0-8508-7997445e5d80" isOneWay="false" action="http://tempuri.org/IService1/GetData" name="GetData" bindingOperationName="GetData" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="999555f4-a021-404b-adb7-d8bcaa7b6b22" isOneWay="false" action="http://tempuri.org/IService1/GetDataUsingDataContract" name="GetDataUsingDataContract" bindingOperationName="GetDataUsingDataContract" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="4fe977c6-21af-4137-b234-fabb42e9c1c0" isOneWay="false" action="http://tempuri.org/IService1/GetHeroRanking" name="GetHeroRanking" bindingOperationName="GetHeroRanking" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="04841771-cd95-43b8-9d01-3e31a8169465" isOneWay="false" action="http://tempuri.org/IService1/GetHeroRealName" name="GetHeroRealName" bindingOperationName="GetHeroRealName" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a3c2609d-b595-49cb-b0b9-df81ee451607" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/Service1.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Superman</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="7b8f4653-e85a-448c-9362-1eb0e9b28aeb" name="GetHeroNameTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="7df9abae-cc4f-48c3-a894-aa25f5ced92c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetHeroRealName TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ec6bf302-8e32-4b91-a870-6103a11933ff" name="GetHeroRealNameTestOne"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestOne" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Superman</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Clark Kent"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="6bbb42c0-533b-4025-8e34-168ed70898cc" name="GetHeroRealNameTestTwo"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestTwo" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Spiderman</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Peter Parker"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="0b17e198-f75d-459d-b936-123dfae051e5" name="GetHeroRealNameTestThree"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestThree" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Batman</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Bruce Wayne"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="f4124969-17bd-4a42-b1ea-a1ca4dfbd837" name="GetHeroRealNameTestFour"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestFour" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Captain America</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Steven Rogers"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e1df5afc-86a3-4f80-9f8e-537ffe6ed766" name="GetHeroRealNameTestFive"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestFive" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Daredevil</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Matthew Michael Murdock"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="efa516d9-40c7-4505-ba21-f39719801495" name="GetHeroRealNameTestSix"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestSix" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Incredible Hulk</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Robert Bruce Banner"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="c8875015-59a0-4b6d-9421-50eacbec67f7" name="GetHeroRealNameTestSeven"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestSeven" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Wonder Woman</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Diana Prince"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d275a8b5-3c03-42a4-9da9-8dec80b7b028" name="GetHeroRealNameTestEight"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestEight" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Iron Man</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Tony Stark"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="31c46d08-a0a6-42e9-9e5c-e6c1d4f418eb" name="GetHeroRealNameTestNine"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestNine" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Flash</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Barry Allen"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="564bb2fe-73cb-43be-96a7-425a62db6c5e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="DataDriven GetHeroRealName TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="989dd735-cb19-4b91-ab64-e865761f7580" name="GetHeroRealNameTestOne"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroRealNameTestOne" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20050/GetHeroRealName</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Spiderman</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="GroovyScriptAssertion" id="e0ef1f91-ffb0-48dc-b6ab-59ff5b06bb71" name="Script Assertion"><con:configuration><scriptText>
+
+def expectedName = "Peter Parker"
+
+def xmlObjResponse = new XmlSlurper().parseText(messageExchange.getResponseContent())
+
+def actualName = xmlObjResponse.Body.GetHeroRealNameResponse.GetHeroRealNameResult
+
+log.info actualName
+
+assert actualName == expectedName , "actualName "+actualName+" Doesn't match expectedName "+expectedName
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="ReadInNextLineOfData" id="3544b8c2-a2a6-4367-8d74-b4c064fb81ee"><con:settings/><con:config><script>//reads in the next line of data from the csv file
+
+def TitleFieldsList = context.expand( '${#TestCase#titleList}' )//read in the title list from the properties
+String[] titleFields = TitleFieldsList.split(",") // split the titleFieldsList into an array
+
+def titleCount = titleFields.size() //count the number of titles
+
+// remove any existing properties
+for( prop in context.testCase.properties) 
+{
+   context.testCase.removeProperty( prop.value.name )
+}
+
+
+//We can use the same fileReader as the Setup script because it was assigned to the context variable.
+nextLine = context.fileReader.readLine()
+
+if(nextLine != null) //if next line of data isn't null then read it in
+{
+ testRunner.testCase.setPropertyValue("titleList",TitleFieldsList) //add the TitleFieldList back to the properties
+ String[] propData = nextLine.split(",") // read in the next set of values from the csv
+ for(z=0; z&lt;=titleCount-1; z++) // for each title create a property with the title and value from the CSV
+ {
+  testRunner.testCase.setPropertyValue(titleFields[z],propData[z])
+  //log.info "count "+z +" "+titleFields[z]+" "+propData[z]
+ }
+  testRunner.gotoStep(0) // proceed to the next relevant step
+}
+
+
+</script></con:config></con:testStep><con:setupScript>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+def projectPath = groovyUtils.projectPath //gets the path of the project root
+
+//Create a new filereader object, using the context variable so it can be used between test components
+context.fileReader = new BufferedReader(new FileReader(projectPath+"\\HeroList.csv"))
+def curTC = testCase
+
+//Read in the first line of the data file
+firstLine = context.fileReader.readLine()
+
+//The first line is the titles. We want to use this to name the properties we are going to set up.
+//Set the firstline as a property itself so we can use this in ReadNextLine Groovy Script
+curTC.setPropertyValue("titleList",firstLine)
+
+//Split the first line into a string array
+String[] titleFields = firstLine.split(",")
+
+//Read in the next line and split it into a string array
+firstLine = context.fileReader.readLine()
+String[] propData = firstLine.split(",")
+
+
+def titleCount = titleFields.size() // count how many titles there are
+for(z=0; z&lt;=titleCount-1; z++) // for each title add to the properties the title and the value
+{
+ curTC.setPropertyValue(titleFields[z],propData[z])
+ //log.info "count "+z +" "+titleFields[z]+" "+propData[z]
+} 
+</con:setupScript><con:tearDownScript>context.fileReader.close()</con:tearDownScript><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="52db7e45-667a-4069-84fa-462ad1814610" name="GetHeroDetailsTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="8c913075-3e1b-45d6-8016-04344ed74b72" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetHeroDetails TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="88f60f03-4fe4-4d7d-ad1e-88585ab6886d" name="GetHeroDetails"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BasicHttpBinding_IService1</con:interface><con:operation>GetHeroRealName</con:operation><con:request name="GetHeroDetails" id="75d1f840-dcdf-4c8d-914b-8e77c4c91b67"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:20055/GetHeroDetails</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:GetHeroRealName>\r
+         <!--Optional:-->\r
+         <tem:alias>Superman</tem:alias>\r
+      </tem:GetHeroRealName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://tempuri.org/IService1/GetHeroRealName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:mockService id="65edfd32-cc65-4469-b3e7-bfbcac045d67" port="20050" path="/GetHeroRealName" host="localhost" name="GetHeroRealName" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetHeroRealName" id="8c91e006-98a7-4a03-9ba7-6c5d79a5e131" interface="BasicHttpBinding_IService1" operation="GetHeroRealName"><con:settings/><con:defaultResponse>Default</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>
+
+log.info "Mock for GetHeroRealName has been triggered"
+
+def xmlObj=new XmlSlurper().parseText(mockRequest.requestContent)
+def alias
+def first
+def last
+def heroName = xmlObj.Body.GetHeroRealName.alias
+log.info xmlObj.Body.GetHeroRealName.alias
+log.info heroName.toString().toUpperCase()
+
+switch(heroName.toString().toUpperCase())
+{
+	case "SUPERMAN":
+	alias = "Clark Kent"
+	first = "Clark"
+	last = "Kent"
+	break
+	case "SPIDERMAN":
+	alias = "Peter Parker"
+	first = "Peter"
+	last = "Parker"
+	break
+	case "BATMAN":
+	alias = "Bruce Wayne"
+	first = "Bruce"
+	last = "Wayne"
+	break
+	case "CAPTAIN AMERICA":
+	alias = "Steven Rogers"
+	first = "Steven"
+	last = "Rogers"
+	break
+	case "DAREDEVIL":
+	alias = "Matthew Michael Murdock"
+	first = "Matthew"
+	last = "Murdock"
+	break
+	case "INCREDIBLE HULK":
+	alias = "Robert Bruce Banner"
+	first = "Robert"
+	last = "Banner"
+	break
+	case "IRON MAN":
+	alias = "Tony Stark"
+	first = "Tony"
+	last = "Stark"
+	break
+	case "FLASH":
+	alias = "Barry Allen"
+	first = "Barry"
+	last = "Allen"
+	break
+	case "WONDER WOMAN":
+	alias = "Diana Prince"
+	first = "Diana"
+	last = "Prince"
+	break
+	default:
+	log.info "No Alias Found For Hero "+heroName+". Returning Default"
+	return "Default"
+	break
+	
+}
+
+
+	       
+context.alias = alias
+context.first = first
+context.last = last
+
+log.info "Returning Mock Response For Here "+heroName
+return "SuccessfulResponse"
+</con:dispatchPath><con:response name="SuccessfulResponse" id="a88f1f92-8d14-448d-9883-d9da8154dbad" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroRealNameResponse>
+         <!--Optional:-->
+         <tem:GetHeroRealNameResult>${alias}</tem:GetHeroRealNameResult>
+         <tem:GetHeroRealFirstNameResult>${first}</tem:GetHeroRealFirstNameResult>
+         <tem:GetHeroRealLastNameResult>${last}</tem:GetHeroRealLastNameResult>
+         <tem:GetneighbourNameResult>Barry</tem:GetneighbourNameResult>
+      </tem:GetHeroRealNameResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="Default" id="61c37f4a-b3d2-4660-95d8-93e6a8945852" httpResponseStatus="404" encoding="UTF-8"><con:settings><con:setting id="com.eviware.soapui.settings.CommonSettings@entitizeProperties">false</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockResponse@enable_inline_files">false</con:setting></con:settings><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroRealNameError>
+         <!--Optional:-->
+         <tem:Description>HeroNotFound</tem:Description>
+      </tem:GetHeroRealNameError>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:mockService id="19a07f47-2d5e-4a7e-9ede-df6b9f1b7160" port="20055" path="/GetHeroDetails" host="localhost" name="GetHeroDetails" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetHeroDetails" id="3cf5e4e9-98dc-4b24-8ab7-ea192b19545f" interface="BasicHttpBinding_IService1" operation="GetHeroRealName"><con:settings/><con:defaultResponse>Default</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>
+
+log.info "Mock for GetHeroDetails has been triggered"
+
+def xmlObj=new XmlSlurper().parseText(mockRequest.requestContent)
+def alias
+def heroName = xmlObj.Body.GetHeroRealName.alias
+//log.info xmlObj
+log.info xmlObj.Body.GetHeroRealName.alias
+
+log.info heroName.toString().toUpperCase()
+switch(heroName.toString().toUpperCase())
+{
+	case "SUPERMAN":
+	log.info "Returning mock for "+heroName
+	return "Superman"
+	break
+	case "SPIDERMAN":
+	log.info "Returning mock for "+heroName
+	return "Spiderman"
+	break
+	case "BATMAN":
+	log.info "Returning mock for "+heroName
+	return "Batman"
+	break
+	case "CAPTAIN AMERICA":
+	log.info "Returning mock for "+heroName
+	return "Captain America"
+	break
+	case "DAREDEVIL":
+	log.info "Returning mock for "+heroName
+	return "DareDevil"
+	break
+	case "INCREDIBLE HULK":
+	log.info "Returning mock for "+heroName
+	return "Incredible Hulk"
+	break
+	case "IRON MAN":
+	log.info "Returning mock for "+heroName
+	return "Iron Man"
+	break
+	case "FLASH":
+	log.info "Returning mock for "+heroName
+	return "Flash"
+	break
+	default:
+	log.info "No Alias Found For Hero "+heroName+". Returning Default"
+	return "Default"
+	break
+	
+}
+
+
+	
+
+
+
+
+                
+
+
+</con:dispatchPath><con:response name="Default" id="0d8d9ce0-cfc0-470e-b7e4-834d6bb8e7d9" httpResponseStatus="404" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroRealNameError>
+         <!--Optional:-->
+         <tem:Description>HeroNotFound</tem:Description>
+      </tem:GetHeroRealNameError>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="Superman" id="fa1a5321-9e0b-45ff-ae38-f0fe29e35908" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroDetailsResponse>
+         <!--Optional:-->
+         <tem:GetHeroDetails>
+	         <tem:HeroName>Superman</tem:HeroName>
+     	    <tem:RealName>Clark Kent</tem:RealName>	
+     	    <tem:Attribute>         
+	     	    <tem:Type>Mask</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Cape</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Flies</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>SuperStrength</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>        
+	         <Description>As his home planet crumbled his parents sent him into space.
+He landed on earth and was brought up by some decent folks out in the country. 
+Because of the gravitational differences between his home planet and earth he now has super powers.
+Oh and something about ice and crystals . . .</Description> 
+         </tem:GetHeroDetails>
+      </tem:GetHeroDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="Spiderman" id="fa1a5321-9e0b-45ff-ae38-f0fe29e35908" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroDetailsResponse>
+         <!--Optional:-->
+         <tem:GetHeroDetails>
+	         <tem:HeroName>Spiderman</tem:HeroName>
+     	    <tem:RealName>Peter Parker</tem:RealName>	
+     	    <tem:Attribute>         
+	     	    <tem:Type>Mask</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Cape</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Flies</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>SuperStrength</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+	         	         <Description>He was visiting some sort of research lab and he got bitten by some weird spider. 
+This giving him spider like abilities one of which was not the ability to shoot web out of his hands. 
+He made some sort of gadget to shoot web like substance up until some point where 
+he was turned into a actual spider. 
+When he was turned back from being a real life spider he then had the ability to shoot webs out of his hands. 
+His parents where dead when he was much younger and then his uncle that raised him also died at some point</Description> 
+         </tem:GetHeroDetails>
+      </tem:GetHeroDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="Iron Man" id="fa1a5321-9e0b-45ff-ae38-f0fe29e35908" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroDetailsResponse>
+         <!--Optional:-->
+         <tem:GetHeroDetails>
+	         <tem:HeroName>Iron Man</tem:HeroName>
+     	    <tem:RealName>Tony Stark</tem:RealName>	
+     	    <tem:Attribute>         
+	     	    <tem:Type>Mask</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Cape</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Flies</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>SuperStrength</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+	         	         <Description>Rich guy that made billions from fuelling wars and selling weapons to the highest bidder Tony was kidnapped and forced to build some sort of weapon. 
+Instead he built some sort of iron man suit and armed with the iron man song by Black Sabbath he proceeded to escape. 
+Once home he found that he liked wearing a metal suit so he built a better version and thus became iron man. 
+Or is the suit iron man and he is just the soft chewy interior of the machine. 
+If someone else jumped into the suit and ran around saving people would people call tony Iron man or the suit Iron man. 
+Better yet say the suit had a mind of it's own and was flying around doing stuff would people yell oh look its Iron Man or would they say Oh look it's Iron mans suit? 
+Wow thats deep . . .</Description> 
+         </tem:GetHeroDetails>
+      </tem:GetHeroDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="Captain America" id="fa1a5321-9e0b-45ff-ae38-f0fe29e35908" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroDetailsResponse>
+         <!--Optional:-->
+         <tem:GetHeroDetails>
+	         <tem:HeroName>Captain America</tem:HeroName>
+     	    <tem:RealName>Steven Rogers</tem:RealName>	
+     	    <tem:Attribute>         
+	     	    <tem:Type>Mask</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Cape</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Flies</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>SuperStrength</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>        
+	         	         <Description>He was a skinnny little man with buckets of courage I think. . . 
+Its been a while since i watched the movie and i wasn't paying to much attention to the starting.
+Anyhow they made some sort of machine that gave him instant muscles without the roids chin. 
+Now I'm not too sure how super he is, I mean he is stronger then most people and has a fancy shield. But when watching 
+a movie he seems to change his abilities. At one point he is fighting a normal man and just manages to 
+beat him but then later on he is fighting some supervillian and just manages to beat him ??? 
+Maybe that is part of his super powers, to be just a little better then everyone he fights. 
+I'm not sure if it is part of his back story but the whole flying into the ice thing at the end of the first movie was um . . . Lame.</Description>  
+         </tem:GetHeroDetails>
+      </tem:GetHeroDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="Flash" id="fa1a5321-9e0b-45ff-ae38-f0fe29e35908" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroDetailsResponse>
+         <!--Optional:-->
+         <tem:GetHeroDetails>
+	         <tem:HeroName>Flash</tem:HeroName>
+     	    <tem:RealName>Barry Allen</tem:RealName>	
+     	    <tem:Attribute>         
+	     	    <tem:Type>Mask</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Cape</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Flies</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>SuperStrength</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+	         	         <Description>So here is something confusing, don't get Flash mixed up with Marvels Flash Thompson. 
+One is a super fast super hero the other is a dude that was good at running and bullied peter parker until they grew up and became friends.
+After spending 30 minutes reading about his origins, he never developed any powers at all. 
+So the real flash wasn't just one person, there were four people that developed flash like symptoms from things such as being struck by lightening and something about chemical lightening . . .  weird. 
+And the tv series on at the moment looks ridiculous. 
+I have only seen about 4 minutes of the program but that four minutes is enough to reassure me that my judgment is correct. 
+Seeing flash running at super high speed only to stop infront of the bad guy and attempt to punch him in normal speed mode made me want to watch something else and i did.</Description> 
+         </tem:GetHeroDetails>
+      </tem:GetHeroDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="Batman" id="fa1a5321-9e0b-45ff-ae38-f0fe29e35908" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroDetailsResponse>
+         <!--Optional:-->
+         <tem:GetHeroDetails>
+	         <tem:HeroName>Batman</tem:HeroName>
+     	    <tem:RealName>Bruce Wayne</tem:RealName>	
+     	    <tem:Attribute>         
+	     	    <tem:Type>Mask</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Cape</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Flies</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>SuperStrength</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>      
+	         	         <Description>He was a rich kid, his parents were killed in front of him when getting mugged. 
+So he spent some of his billions on turning himself into a superhero in a bat costume.
+While he doesn't have super powers he has an array of gadgets and vehicles at his disposal for 
+delivering his own justice to the evil doers of Gotham City. 
+Oh and he is Batman...</Description>    
+         </tem:GetHeroDetails>
+      </tem:GetHeroDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="DareDevil" id="fa1a5321-9e0b-45ff-ae38-f0fe29e35908" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroDetailsResponse>
+         <!--Optional:-->
+         <tem:GetHeroDetails>
+	         <tem:HeroName>DareDevil</tem:HeroName>
+     	    <tem:RealName>Matthew Michael Murdock</tem:RealName>	
+     	    <tem:Attribute>         
+	     	    <tem:Type>Mask</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Cape</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Flies</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>SuperStrength</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>      
+	         	         <Description>He was a blind kid and because of his blindness he had heightened senses. 
+Well thats the info I had gathered from watching that awful awful Ben Affleck movie so many years ago. 
+After two seconds of research turns out he had some sort of radioactive substance fall on him from a passing vehicle. 
+It was this that blinded him but gave him his heightened senses.</Description>    
+         </tem:GetHeroDetails>
+      </tem:GetHeroDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:response name="Incredible Hulk" id="fa1a5321-9e0b-45ff-ae38-f0fe29e35908" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetHeroDetailsResponse>
+         <!--Optional:-->
+         <tem:GetHeroDetails>
+	         <tem:HeroName>Incredible Hulk</tem:HeroName>
+     	    <tem:RealName>Robert Bruce Banner</tem:RealName>	
+     	    <tem:Attribute>         
+	     	    <tem:Type>Mask</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Cape</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>Flies</tem:Type>
+	     	    <tem:Value>false</tem:Value>	     	    
+	         </tem:Attribute>         
+     	    <tem:Attribute>         
+	     	    <tem:Type>SuperStrength</tem:Type>
+	     	    <tem:Value>true</tem:Value>	     	    
+	         </tem:Attribute>         
+	         	         <Description>Caught in a blast of Gamma radiation he become a Jenkyll and Hyde character. 
+Nice guy Banner when he was calm 
+But when he was angered he would turn into a green super strong monster of little intelligence and consumed with rage. 
+Randomly going from crazy distructo monster he was able to control himself as the hulk in the avengers movie with no explaination given...</Description> 
+         </tem:GetHeroDetails>
+      </tem:GetHeroDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IService1/GetHeroRealName"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties><con:property><con:name>server</con:name><con:value>localhost</con:value></con:property><con:property><con:name>portnumber</con:name><con:value>7002</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
